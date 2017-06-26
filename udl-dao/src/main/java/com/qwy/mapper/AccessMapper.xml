@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qwy.mapper.AccessMapper" >
+  <resultMap id="BaseResultMap" type="com.qwy.pojo.Access" >
+    <id column="root" property="root" jdbcType="INTEGER" />
+    <result column="user" property="user" jdbcType="INTEGER" />
+    <result column="end" property="end" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    root, user, end
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qwy.pojo.AccessExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from access
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from access
+    where root = #{root,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from access
+    where root = #{root,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qwy.pojo.AccessExample" >
+    delete from access
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qwy.pojo.Access" >
+    insert into access (root, user, end
+      )
+    values (#{root,jdbcType=INTEGER}, #{user,jdbcType=INTEGER}, #{end,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qwy.pojo.Access" >
+    insert into access
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="root != null" >
+        root,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="end != null" >
+        end,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="root != null" >
+        #{root,jdbcType=INTEGER},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=INTEGER},
+      </if>
+      <if test="end != null" >
+        #{end,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qwy.pojo.AccessExample" resultType="java.lang.Integer" >
+    select count(*) from access
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update access
+    <set >
+      <if test="record.root != null" >
+        root = #{record.root,jdbcType=INTEGER},
+      </if>
+      <if test="record.user != null" >
+        user = #{record.user,jdbcType=INTEGER},
+      </if>
+      <if test="record.end != null" >
+        end = #{record.end,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update access
+    set root = #{record.root,jdbcType=INTEGER},
+      user = #{record.user,jdbcType=INTEGER},
+      end = #{record.end,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qwy.pojo.Access" >
+    update access
+    <set >
+      <if test="user != null" >
+        user = #{user,jdbcType=INTEGER},
+      </if>
+      <if test="end != null" >
+        end = #{end,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where root = #{root,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qwy.pojo.Access" >
+    update access
+    set user = #{user,jdbcType=INTEGER},
+      end = #{end,jdbcType=TIMESTAMP}
+    where root = #{root,jdbcType=INTEGER}
+  </update>
+</mapper>
